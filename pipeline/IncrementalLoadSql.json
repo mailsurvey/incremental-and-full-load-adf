@@ -141,7 +141,7 @@
 					"storedProcedureParameters": {
 						"lastloaddatecontrol": {
 							"value": {
-								"value": "@activity('Extract Current Load Date').output.value.last_modified_date",
+								"value": "@activity('Extract Current Load Date').output.firstRow.last_modified_date",
 								"type": "Expression"
 							},
 							"type": "DateTime"
