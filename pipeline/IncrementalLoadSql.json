@@ -83,7 +83,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from dbo.tbluser where last_modified_date>= '@{activity('Extract Current Load Date').output.firstRow.last_modified_date}' and last_modified_date > '@{activity('Extract Last Load Date').output.firstRow.last_load_date}'\n\n\n\n\n",
+							"value": "select * from dbo.tbluser where last_modified>= '@{activity('Extract Current Load Date').output.firstRow.last_modified_date}' and last_modified > '@{activity('Extract Last Load Date').output.firstRow.last_load_date}'\n\n\n\n\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
