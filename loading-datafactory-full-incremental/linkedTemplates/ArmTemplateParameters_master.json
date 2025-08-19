@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "loading-datafactory-full-incremental"
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"AzureSqlDatabaseAzure_password": {
+			"value": ""
+		},
+		"AzureKeyVaultSqlPassword_properties_typeProperties_baseUrl": {
+			"value": "https://sql-account-key.vault.azure.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "loading-sql-server-new.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "loadind-sql-db"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "adminuser"
+		},
+		"AzureSqlDatabaseAzure_properties_typeProperties_server": {
+			"value": "loading-sql-server-new.database.windows.net"
+		},
+		"AzureSqlDatabaseAzure_properties_typeProperties_database": {
+			"value": "my_db_azure"
+		},
+		"AzureSqlDatabaseAzure_properties_typeProperties_userName": {
+			"value": "adminuser"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
