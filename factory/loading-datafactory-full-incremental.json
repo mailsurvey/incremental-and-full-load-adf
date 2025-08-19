@@ -1,0 +1,9 @@
+{
+	"name": "loading-datafactory-full-incremental",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f871537e-f0e5-4cdc-8531-be185881ab07",
+		"tenantId": "2ca453e6-3400-4c0b-b6c8-1cda1f97b03a"
+	}
+}
