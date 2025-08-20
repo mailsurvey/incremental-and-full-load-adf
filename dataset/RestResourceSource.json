@@ -1,0 +1,12 @@
+{
+	"name": "RestResourceSource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}
