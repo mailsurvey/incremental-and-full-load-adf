@@ -106,7 +106,7 @@
 				"     total = sum(total),",
 				"          rownumber = rowNumber(),",
 				"          denserank = denseRank(),",
-				"          rank = rank()) ~> window1",
+				"          ranking = rank()) ~> window1",
 				"select1 aggregate(groupBy(category,",
 				"          brand),",
 				"     total = sum(total)) ~> aggregate1",
