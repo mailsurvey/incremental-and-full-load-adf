@@ -33,6 +33,9 @@
 				},
 				{
 					"name": "aggregate1"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -110,7 +113,8 @@
 				"select1 aggregate(groupBy(category,",
 				"          brand),",
 				"     total = sum(total)) ~> aggregate1",
-				"window1 sink(allowSchemaDrift: true,",
+				"window1 filter(!isNull(brand)) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     umask: 0022,",
 				"     preCommands: [],",
