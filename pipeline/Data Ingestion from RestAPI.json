@@ -70,7 +70,13 @@
 				"outputs": [
 					{
 						"referenceName": "JsonOutput",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": {
+								"value": "@concat('products_', formatDateTime(activity('RestAPI').output.products.title), 'yyyyMMdd')\n\n",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
