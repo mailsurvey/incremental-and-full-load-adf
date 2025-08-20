@@ -1,0 +1,123 @@
+{
+	"name": "dataflowtransformations",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "JsonSource",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "flatten1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "window1"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          products as (id as integer, title as string, description as string, category as string, price as double, discountPercentage as double, rating as double, stock as integer, tags as string[], brand as string, sku as string, weight as integer, dimensions as (width as double, height as double, depth as double), warrantyInformation as string, shippingInformation as string, availabilityStatus as string, reviews as (rating as integer, comment as string, date as string, reviewerName as string, reviewerEmail as string)[], returnPolicy as string, minimumOrderQuantity as integer, meta as (createdAt as string, updatedAt as string, barcode as string, qrCode as string), images as string[], thumbnail as string)[],",
+				"          total as integer,",
+				"          skip as integer,",
+				"          limit as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> source",
+				"source foldDown(unrollMultiple(products,products.tags,products.reviews,products.images),",
+				"     mapColumn(",
+				"          total,",
+				"          skip,",
+				"          limit,",
+				"          id = products.id,",
+				"          title = products.title,",
+				"          description = products.description,",
+				"          category = products.category,",
+				"          price = products.price,",
+				"          discountPercentage = products.discountPercentage,",
+				"          rating = products.rating,",
+				"          stock = products.stock,",
+				"          tags = products.tags,",
+				"          brand = products.brand,",
+				"          sku = products.sku,",
+				"          weight = products.weight,",
+				"          width = products.dimensions.width,",
+				"          height = products.dimensions.height,",
+				"          depth = products.dimensions.depth,",
+				"          warrantyInformation = products.warrantyInformation,",
+				"          shippingInformation = products.shippingInformation,",
+				"          availabilityStatus = products.availabilityStatus,",
+				"          reviews = products.reviews,",
+				"          {rating } = products.reviews.rating,",
+				"          comment = products.reviews.comment,",
+				"          date = products.reviews.date,",
+				"          reviewerName = products.reviews.reviewerName,",
+				"          reviewerEmail = products.reviews.reviewerEmail,",
+				"          returnPolicy = products.returnPolicy,",
+				"          minimumOrderQuantity = products.minimumOrderQuantity,",
+				"          CreadtedAt = products.meta.createdAt,",
+				"          updatedAt = products.meta.updatedAt,",
+				"          barcode = products.meta.barcode,",
+				"          qrCode = products.meta.qrCode,",
+				"          images = products.images,",
+				"          thumbnail = products.thumbnail",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 select(mapColumn(",
+				"          total,",
+				"          id,",
+				"          title,",
+				"          description,",
+				"          category,",
+				"          price,",
+				"          discountPercentage,",
+				"          rating,",
+				"          brand,",
+				"          CreadtedAt,",
+				"          updatedAt",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"aggregate1 window(over(brand),",
+				"     asc(category, true),",
+				"     total = sum(total),",
+				"          rownumber = rowNumber(),",
+				"          denserank = denseRank(),",
+				"          rank = rank()) ~> window1",
+				"select1 aggregate(groupBy(category,",
+				"          brand),",
+				"     total = sum(total)) ~> aggregate1",
+				"window1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}
